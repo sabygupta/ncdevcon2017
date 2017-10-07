@@ -18,6 +18,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.restapi.domain.Poll;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+//@Api(value = "poll", description = "the poll API")
 @RestController
 public class PollController {
 
@@ -30,12 +36,17 @@ public class PollController {
 		System.out.println("Poll collection initialized");
 	}
 
-	@RequestMapping(value = "/polls", method = RequestMethod.GET)
+	//@ApiOperation(value = "Get all polls", notes = "", response = Poll.class, tags = { "poll" })
+	//@ApiResponses(value = { @ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+	//		@ApiResponse(code = 200, message = "successful operation", response = Integer.class) })
+	@RequestMapping(value = "/polls", produces = { "application/json", "application/xml" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Poll>> getAllPolls() {
 
 		return new ResponseEntity<>(polls, HttpStatus.OK);
 	}
 
+	//@ApiOperation(value = "Create a poll", notes = "", response = Poll.class, tags = { "poll" })
+	//TODO: Assignment - Fill in @ApiResponses annotation here
 	@RequestMapping(value = "/polls", produces = { "application/json", "application/xml" }, consumes = {
 			"application/json", "application/xml" }, method = RequestMethod.POST)
 	public ResponseEntity<Poll> createPoll(@RequestBody Poll body) {
@@ -58,7 +69,8 @@ public class PollController {
 		return new ResponseEntity<>(poll, responseHeaders, HttpStatus.CREATED);
 	}
 
-	@SuppressWarnings("unchecked")
+	//@ApiOperation(value = "Get a poll for an Id", notes = "", response = Poll.class, tags = { "poll" })
+	//TODO: Assignment - Fill in @ApiResponses annotation here
 	@RequestMapping(value = "/polls/{pollId}", method = RequestMethod.GET)
 	public ResponseEntity<Poll> getPoll(@PathVariable final int pollId) {
 
@@ -75,7 +87,7 @@ public class PollController {
 		if (p == null) {
 			throw new ResourceNotFoundException("Poll with id " + pollId + " not found");
 		}
-		
+
 		return (ResponseEntity<Poll>) new ResponseEntity<>(p, HttpStatus.OK);
 	}
 
@@ -94,7 +106,5 @@ public class PollController {
 
 		return polls;
 	}
-
-
 
 }

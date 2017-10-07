@@ -42,6 +42,7 @@ public class PetApiController implements PetApi {
 
     public ResponseEntity<List<Pet>> findPetsByTags(@ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags) {
         // do some magic!
+    	System.out.println("inside findPetsByStatus");
         return new ResponseEntity<List<Pet>>(HttpStatus.OK);
     }
 
